@@ -15,7 +15,7 @@ We'll go over the new files (we elide descriptions of anything from HW3 and HW2,
 `CMakeLists.txt` : For building. It should build all three executables `testy_cache`, `server`, `testy_client`. Since we also did our evictor tests inside the `testy_cache.cc` file for HW3, we don't have a `test_evictors.cc` file.
 
 ## Getting Started
-**Important** : You must use a **Mac** environment. Building does not work on the Linux Virtual Machine (as far as we tried).
+
 ### What you need
 Catch2, Crow, cpr, cmake, make, Boost (must have boost version 1.69 specifically. Doesn't work with boost versions greater than 1.69 due to [this issue](https://github.com/ipkn/crow/issues/340)).
 
@@ -25,12 +25,13 @@ We'll go over how to manage these dependencies and compile in the next section. 
  us a massive headache. (We had to zip the repository because the `cpr` library was too large to upload otherwise).
 
 ### How to compile
+We have very specific compilation instructions. Please read carefully (sorry about this). 
 
 - If you currently have the correct version of Boost move onto the next step. Otherwise download boost 1.69 from this link: [boost_1_69_0](https://www.boost.org/users/history/). Extract it anywhere you want on your machine by either by double clicking on the file or using the following Terminal Command `tar xvzf boost_1_69_0.tar.bz2`.
 
 - Unzip our zip file. Wherever you unzipped it, `cd` into it in the command line.
 
-- In the `CMakeLists.txt` file, manually change all paths to the `boost_1_69_0` folder to match the path on your machine. Specifically, you should change it 4 times in lines 16,18, 23 and 25 inside the `if` and `else if` part.
+- In the `CMakeLists.txt` file, manually change all paths to the `boost_1_69_0` folder to match the path on your machine. Specifically, you should change it 4 times in lines 16,18, 23 and 25 in the `set CMAKE_CXX_FLAGS` part. **Important:** if you're on the Linux VM, you must add the flag `-pthread` to the same lines.
 
 - Enter the build folder, `cd build`. If the build folder is not empty, empty it out (i.e. do a clean all in the build directory). You don't have to empty it out if you have already compiled it once before. But for your first time compiling, **empty it out**.   
 
