@@ -17,7 +17,7 @@ We'll go over the new files (we elide descriptions of anything from HW3 and HW2,
 ## Getting Started
 **Important** : You must use a **Mac** environment. Building does not work on the Linux Virtual Machine (as far as we tried).
 ### What you need
-Catch2, Crow, cpr, cmake, make, Boost (must have boost version 1.69 specifically. Doesn't work with other versions due to crow.).
+Catch2, Crow, cpr, cmake, make, Boost (must have boost version 1.69 specifically. Doesn't work with boost versions greater than 1.69 due to [this issue](https://github.com/ipkn/crow/issues/340)).
 
 
 We'll go over how to manage these dependencies and compile in the next section. We've provided a `zip` file containing all our
