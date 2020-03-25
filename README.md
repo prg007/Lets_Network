@@ -39,7 +39,7 @@ We'll go over how to manage these dependencies and compile in the next section. 
 First off, make sure the server is **running** on the same IP and port as the client (in `testy_client.cc`) before you test the client. Otherwise, the client will (understandably) fail.
 To run the server, do `./server` if you just want to use the default parameters (explained below), or do `./server -m X -s Y -p Z -t W` where X is maxmem, Y is the host IP address, Z is the port number, and W is the number of threads. (Currently, the server is single threaded even if you give  W > 1).
 
-Then, to test the client, run `./testy_client`. All the test cases should pass. You can also make manual HTTP requests on a separate command line window using something like `curl`.
+Then, to test the client, run `./testy_client`. All the test cases should pass (if you use the default server configuration). You can also make manual HTTP requests on a separate command line window using something like `curl`.
 Sample `curl` command line usage is :
 
 `curl -X HEAD localhost:2001/`
