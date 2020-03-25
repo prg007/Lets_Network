@@ -15,7 +15,7 @@ We'll go over the new files (we elide descriptions of anything from HW3 and HW2,
 `CMakeLists.txt` : For building. It should build all three executables `testy_cache`, `server`, `testy_client`. Since we also did our evictor tests inside the `testy_cache.cc` file for HW3, we don't have a `test_evictors.cc` file.
 
 ## Getting Started
-
+You can compile and run this on a Mac or in the Linux VM, although the steps are a bit different in each case. See the instructions for details.
 ### What you need
 Catch2, Crow, cpr, cmake, make, Boost (must have boost version 1.69 specifically. Doesn't work with boost versions greater than 1.69 due to [this issue](https://github.com/ipkn/crow/issues/340)).
 
@@ -31,11 +31,11 @@ We have very specific compilation instructions. Please read carefully (sorry abo
 
 - Unzip our zip file. Wherever you unzipped it, `cd` into it in the command line.
 
-- In the `CMakeLists.txt` file, manually change all paths to the `boost_1_69_0` folder to match the path on your machine. Specifically, you should change it 4 times in lines 16,18, 23 and 25 in the `set CMAKE_CXX_FLAGS` part. **Important:** if you're on the Linux VM, you must add the flag `-pthread` to the same lines.
+- In the `CMakeLists.txt` file, manually change all paths to the `boost_1_69_0` folder to match the path on your machine/VM. Specifically, you should change it 4 times in lines 16,18, 23 and 25 in the `set CMAKE_CXX_FLAGS` part. **Important:** if you're on the Linux VM, you must add the flag `-pthread` to the same lines. 
 
 - Enter the build folder, `cd build`. If the build folder is not empty, empty it out (i.e. do a clean all in the build directory). You don't have to empty it out if you have already compiled it once before. But for your first time compiling, **empty it out**.   
 
-- From the build folder, do `cmake ..` then `make`. This should produce the three executables `testy_cache`, `server`, and `testy_client` which will also be in the build folder.
+- From the build folder, do `cmake ..` then `make`. This should produce the three executables `testy_cache`, `server`, and `testy_client` which will also be in the build folder. Since this Makefile produced by the CMakefile has a lot of bloat (it was provided by the cpr library, which we modified for our purposes), once it says that it has built all of the three executables above you can do a keyboard error to stop it from building the other junk. 
 
 ### How to run
 First off, make sure the server is **running** on the same IP and port as the client (in `testy_client.cc`) before you test the client. Otherwise, the client will (understandably) fail.
@@ -62,4 +62,6 @@ Our asynchronous TCP server uses Crow, as mentioned above. Our default settings 
 Our server cache uses a default load factor of 0.75, as well as the default hash function (`std::hash`) and default eviction policy (refuse exceeding cache puts). Refer to `cache_server.cc` for further implementation details.
 
 ## TCP Client
-Refer to `cache_client.cpp` for implementation details. We used a library called C++ Requests, or cpr, for short (linked above). As for the issue of memory ownership of the pointer from `Cache::get()`, we maintained a vector of returned char pointers in the implementation and destructed each one in the destructor of the actual `Cache` object. This means that the returned pointers will be tied to the life and death of the Cache client object.
+Refer to `cache_client.cpp` for implementation details. We used a library called C++ Requests, or cpr, for short (linked above). If the TCP client detects that its host server is not running, it gracefully exits. As for the issue of memory ownership of the pointer from `Cache::get()`, we maintained a vector of returned char pointers in the implementation and deleted each one in the destructor of the actual `Cache` object. This means that the returned pointers will be tied to the life and death of the Cache client object. 
+
+When testing (i.e. running `testy_client`) make sure that the server is configured in its default state, as that's what the test cases are designed for. Running **valgrind** on `./testy_client` while the `./server` is up assures us that there are no memory leaks.  Valgrind on `testy_cache` also gives us no memory leaks, although that doesn't depend on whether the server is up or not. 
