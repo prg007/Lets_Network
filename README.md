@@ -32,7 +32,7 @@ We'll go over how to manage these dependencies and compile in the next section. 
 
 - In the `CMakeLists.txt` file, manually change all paths to the `boost_1_69_0` folder to match the path on your machine. Specifically, you should change it 4 times in lines 16,18, 23 and 25 inside the `if` and `else if` part.
 
-- Enter the file in your machine. Then enter the build folder, `cd build`.
+- Enter the build folder, `cd build`.
 
 - From the build folder, do `cmake ..` then `make`. This should produce the three executables `testy_cache`, `server`, and `testy_client` in the build folder.
 
